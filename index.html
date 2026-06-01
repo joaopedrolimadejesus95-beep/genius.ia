@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Genius IA</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+    <h2>🤖 Genius IA</h2>
+
+    <button onclick="enviarComando('jogar')">
+        🎮 Jogar
+    </button>
+
+    <button onclick="enviarComando('historico')">
+        📜 Histórico
+    </button>
+
+</div>
+
+<!-- CHAT -->
+
+<div class="main">
+
+    <div id="chat"></div>
+
+    <!-- INPUT -->
+
+    <div class="input-area">
+
+        <input
+            type="file"
+            id="imagem"
+            accept="image/*"
+        >
+
+        <input
+            id="mensagem"
+            placeholder="Digite uma mensagem..."
+        >
+
+        <button onclick="enviar()">
+            Enviar
+        </button>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
