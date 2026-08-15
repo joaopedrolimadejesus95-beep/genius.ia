@@ -73,12 +73,19 @@ async function enviar() {
     // FETCH
     // ====================
 
+    // ANTES: URL absoluta "http://127.0.0.1:5000/chat".
+    // AGORA: URL relativa "/chat", porque o próprio Flask está servindo
+    // esta página (mesma origem). Isso evita problemas de CORS.
+    // "credentials: same-origin" garante que o cookie de sessão seja
+    // enviado junto — sem isso, o Flask não lembra do jogo/histórico
+    // entre uma mensagem e outra.
     let resposta =
         await fetch(
-            "http://127.0.0.1:5000/chat",
+            "/chat",
             {
-                method:"POST",
-                body:formData
+                method: "POST",
+                credentials: "same-origin",
+                body: formData
             }
         );
 
@@ -111,6 +118,10 @@ function adicionarMensagem(
         );
 
     div.className = tipo;
+
+    // white-space: pre-line faz o texto respeitar as quebras de linha (\n)
+    // que vêm tanto da mensagem de boas-vindas quanto do histórico de cálculos.
+    div.style.whiteSpace = "pre-line";
 
     div.innerText = texto;
 
@@ -185,3 +196,24 @@ document
 
     }
 );
+
+// ====================
+// MENSAGEM DE BOAS-VINDAS
+// ====================
+
+// Aparece assim que a página carrega, sem precisar chamar a API —
+// deixa claro pro usuário o que o bot sabe fazer, sem gastar cota do Gemini.
+window.addEventListener("DOMContentLoaded", function () {
+
+    adicionarMensagem(
+        "Oi! Eu sou o Genius IA 🤖\n\n" +
+        "Posso te ajudar com:\n" +
+        "💬 Conversar e tirar dúvidas de programação\n" +
+        "🧮 Fazer contas (ex: \"10 dividido por 2\")\n" +
+        "🎮 Jogar de adivinhar o número (clique em Jogar)\n" +
+        "🖼️ Analisar uma imagem que você enviar\n" +
+        "📜 Mostrar o histórico de cálculos (clique em Histórico)",
+        "bot"
+    );
+
+});
